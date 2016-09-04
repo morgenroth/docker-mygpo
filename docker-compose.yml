@@ -1,0 +1,19 @@
+version: '2'
+services:
+  db:
+    image: postgres
+    environment:
+     - POSTGRES_PASSWORD=mygpo
+     - POSTGRES_USER=mygpo
+     - POSTGRES_DB=mygpo
+  mygpo:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+     - DATABASE_URL=postgres://mygpo:mygpo@db:5432/mygpo
+     - SECRET_KEY=${SECRET_KEY}
+    links:
+     - db:db
+    ports:
+     - 8000:8000/tcp
